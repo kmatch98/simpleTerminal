@@ -18,39 +18,28 @@ Editor.terminal=editorTerminal(Editor.display,
 
 ## editorTerminal Functions:
 
-- deinit_display()
-	Clears the display back to the standard terminal view (usually to the REPL)
+- deinit_display() - Clears the display back to the standard terminal view (usually to the REPL)
 
-- writeToTerminal(terminal, text)
-	This is an internal function where you can write text either to the "mainTerminal" or the "statusTerminal".
+- writeToTerminal(terminal, text) - This is an internal function where you can write text either to the "mainTerminal" or the "statusTerminal".
 
-- write(text)
-	This function writes text to either "mainTerminal" or "statusTerminal" depending upon the current cursor positions.
+- write(text) - This function writes text to either "mainTerminal" or "statusTerminal" depending upon the current cursor positions.
 
-- setCursor(column, row)
-	Sets the cursor to the desired column or row.  
+- setCursor(column, row) - Sets the cursor to the desired column or row.  
 
-- cursor(onoff)
-	If True, then the cursor is on, False and the cursor is turned off.
+- cursor(onoff) - If True, then the cursor is on, False and the cursor is turned off.
 	Note, there is never a cursor shown on the status terminal.
 
-- cursorOff()
-	Turns the cursor off.
+- cursorOff() - Turns the cursor off.
 
-- cursorOn()
-	Turns the cursor on
+- cursorOn() - Turns the cursor on
 
-- scrollUp(count)
-	Scrolls the mainTerminal up by `count` rows.  If no `count` value is provided, it scrolls once.
+- scrollUp(count) - Scrolls the mainTerminal up by `count` rows.  If no `count` value is provided, it scrolls once.
 
-- scrollDown(count)
-	Scrolls the mainTerminal down by `count` rows.  If no `count` value is provided, it scrolls once.
+- scrollDown(count) - Scrolls the mainTerminal down by `count` rows.  If no `count` value is provided, it scrolls once.
 
-- clearEOL()
-	On the current line, it clears all text to the right of the cursor position.
+- clearEOL() - On the current line, it clears all text to the right of the cursor position.
 
-- getScreenSize()
-	Returns `[rows,columns]` of the editorTerminal, including both the mainTerminal and statusTerminal, in units of number of characters.
+- getScreenSize() - Returns `[rows,columns]` of the editorTerminal, including both the mainTerminal and statusTerminal, in units of number of characters.
 
 # simpleTerminal class
 
@@ -117,54 +106,28 @@ cursorWhileScrolling=False: the cursor is turned off while scrolling.
 ```
 
 ## simpleTerminal Functions:
-- setCursor(column, row)
+- setCursor(column, row) - Set the cursor entry point to the specified location.  It is perfectly ok to set the cursor outside of the display, but nothing will show when text is added at that location.
 
-	Set the cursor entry point to the specified location.  It is perfectly ok to set the cursor outside of the display, but nothing will show when text is added at that location.
+- writeCursorChar() - This is an internal function that creates the (1x1) tile grid for the cursor, so that the letter matches whatever is in the main tile grid.
 
-- writeCursorChar()
+- cursorColorReset() - Turns the cursor color back to the default values, used for setting back to the original value.
 
-	This is an internal function that creates the (1x1) tile grid for the cursor, so that the letter matches whatever is in the main tile grid.
+- cursorColorChange() - Alternates the color of the cursor by swapping the background and foreground color
 
-- cursorColorReset()
+- cursorOff() - Stops displaying the cursor
 
-	Turns the cursor color back to the default values, used for setting back to the original value.
+- cursorOn() - Turns the cursor display to on
 
-- cursorColorChange()
+- writeChar(char) - Adds a character to the terminal at the current cursor position, increments the cursor
 
-	Alternates the color of the cursor by swapping the background and foreground color
+- write(text) - Adds a string to the terminal at the current cursor position.  Also handles newline, carriage return and backspace.
 
-- cursorOff()
+- writeBlank(column, row) - Writes  blank space at the given location.  Note: This does not update the cursor position.
 
-	Stops displaying the cursor
+- scrollUp() - Scrolls up one line, clearing the line that goes off the display
 
-- cursorOn()
+- scrollDown() - Scrolls down one line, clearing the line that goes off the display
 
-	Turns the cursor display to on
+- clearEOL() - Clears the current line to the right of the current cursor position
 
-- writeChar(char)
-
-	Adds a character to the terminal at the current cursor position, increments the cursor
-
-- write(text)
-
-	Adds a string to the terminal at the current cursor position.  Also handles newline, carriage return and backspace.
-
-- writeBlank(column, row)
-
-	Writes  blank space at the given location.  Note: This does not update the cursor position.
-
-- scrollUp()
-
-	Scrolls up one line, clearing the line that goes off the display
-
-- scrollDown()
-
-	Scrolls down one line, clearing the line that goes off the display
-
-- clearEOL()
-
-	Clears the current line to the right of the current cursor position
-
-- clearAll()
-
-	Writes blanks into the whole terminal
+- clearAll() - Writes blanks into the whole terminal
