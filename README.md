@@ -1,6 +1,6 @@
 # simpleTerminal and editorTerminal 
 
-simpleTerminal:  A CircuitPython class for creating a region of text, that keeps track of the cursor location for text entry.  Also includes capability for a highlighted cursor.
+simpleTerminal:  A CircuitPython class for displaying a rectangular region of text, that keeps track of the cursor location for text entry.  Also includes capability for a highlighted cursor.
 
 editorTerminal: A CircuitPython class with an upper text region and a bottom status line, used with robert-hh's pye editor (https://github.com/robert-hh/Micropython-Editor/tree/lcd_io).
 
