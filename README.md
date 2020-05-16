@@ -9,8 +9,9 @@ If you are want to make a text editor where you want a single status line at the
 # editorTerminal class
 
 ## How to use editorTerminal:
-from simpleTerminal import editorTerminal
 ```python
+from simpleTerminal import editorTerminal
+
 Editor.terminal=editorTerminal(Editor.display, 
 				displayXPixels=Editor.xPixels,
 				displayYPixels=Editor.yPixels)
