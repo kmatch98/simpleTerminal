@@ -61,6 +61,8 @@ Here is an example from the python editor (pye_mp.py) that was updated
 to use simpleTerminal to manage the main text and the status line.
 
 ```python
+from simpleTerminal import simpleTerminal
+
 self.g=displayio.Group(max_size=2, scale=1) # create a group
 Editor.display.show(self.g) # add the group to the display
 self.g.append(self.mainTerminal.displayGroup) # add the first terminal's displayGroup to my main group
