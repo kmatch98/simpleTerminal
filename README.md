@@ -95,18 +95,12 @@ simpleTerminal(
         y=0, # pixel position of the terminal with the parent.
         cursorX=0, # initial row position of the cursor
         cursorY=0, # initial row position of the cursor
-        cursorDisplay=True,
-        cursorWhileScrolling=False,
+        cursorDisplay=True, # default: the cursor is visible
+        cursorWhileScrolling=False, # default: the cursor is turned off while scrolling.
     ):
 ```
 
-
 This class creates a terminal of dimensions (columns, rows) with a two color palette using the specified font.  
-
-```python
-cursorDisplay=True: the cursor is visible
-cursorWhileScrolling=False: the cursor is turned off while scrolling.
-```
 
 ## simpleTerminal Functions:
 - setCursor(column, row) - Set the cursor entry point to the specified location.  It is perfectly ok to set the cursor outside of the display, but nothing will show when text is added at that location.
