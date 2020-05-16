@@ -120,7 +120,7 @@ For example:
             for i in range(0, scrolling):
                 self.mainTerminal.scrollUp()
             Editor.display.auto_refresh=True
-
+```
  
 
 ## simpleTerminal Functions:
