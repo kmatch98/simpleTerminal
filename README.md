@@ -1,4 +1,4 @@
-# simpleTerminal and editorTerminal
+# simpleTerminal and editorTerminal 
 
 simpleTerminal:  A CircuitPython class for creating a region of text, that keeps track of the cursor location for text entry.  Also includes capability for a highlighted cursor.
 
