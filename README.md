@@ -24,7 +24,6 @@ editorTerminal(
         cursorDisplay=True, # default: the cursor is visible
         cursorWhileScrolling=False, # default: the cursor is turned off while scrolling.
     )
-
 ```
 
 ## How to use editorTerminal:
@@ -63,6 +62,7 @@ Editor.terminal=editorTerminal(Editor.display,
 
 # simpleTerminal class
 
+```python
 simpleTerminal(
         rows,
         columns,
@@ -75,7 +75,7 @@ simpleTerminal(
         cursorY=0, # initial row position of the cursor
         cursorDisplay=True, # default: the cursor is visible
         cursorWhileScrolling=False, # default: the cursor is turned off while scrolling.
-    ):
+    )
 ```
 
 This class creates a terminal of dimensions (columns, rows) with a two color palette using the specified font. 
