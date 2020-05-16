@@ -1,9 +1,63 @@
-# simpleTerminal
+# simpleTerminal and editorTerminal
 
 simpleTerminal:  A CircuitPython class for creating a region of text, that keeps track of the cursor location for text entry.  Also includes capability for a highlighted cursor.
 
-How to use:
-myTerminal=simpleTerminal(rows=17, columns=40) (for a 240x240 display using terminalio.FONT)
+editorTerminal: A CircuitPython class with an upper text region and a bottom status line, used with robert-hh's pye editor (https://github.com/robert-hh/Micropython-Editor/tree/lcd_io).
+
+If you are want to make a text editor where you want a single status line at the bottom, then you should use the editorTerminal.  If you want to do something different, you can make your own out of the simpleTerminal class.
+
+# editorTerminal class
+
+## How to use editorTerminal:
+from simpleTerminal import editorTerminal
+```python
+Editor.terminal=editorTerminal(Editor.display, 
+				displayXPixels=Editor.xPixels,
+				displayYPixels=Editor.yPixels)
+```                
+
+## editorTerminal Functions:
+
+- deinit_display()
+	Clears the display back to the standard terminal view (usually to the REPL)
+
+- writeToTerminal(terminal, text)
+	This is an internal function where you can write text either to the "mainTerminal" or the "statusTerminal".
+
+- write(text)
+	This function writes text to either "mainTerminal" or "statusTerminal" depending upon the current cursor positions.
+
+- setCursor(column, row)
+	Sets the cursor to the desired column or row.  
+
+- cursor(onoff)
+	If True, then the cursor is on, False and the cursor is turned off.
+	Note, there is never a cursor shown on the status terminal.
+
+- cursorOff()
+	Turns the cursor off.
+
+- cursorOn()
+	Turns the cursor on
+
+- scrollUp(count)
+	Scrolls the mainTerminal up by `count` rows.  If no `count` value is provided, it scrolls once.
+
+- scrollDown(count)
+	Scrolls the mainTerminal down by `count` rows.  If no `count` value is provided, it scrolls once.
+
+- clearEOL()
+	On the current line, it clears all text to the right of the cursor position.
+
+- getScreenSize()
+	Returns `[rows,columns]` of the editorTerminal, including both the mainTerminal and statusTerminal, in units of number of characters.
+
+# simpleTerminal class
+
+### How to use simpleTerminal:
+```python
+myTerminal=simpleTerminal(rows=17, columns=40) #(for a 240x240 display using the default terminalio.FONT)```
+
 Setup a display using displayio and your hardware display driver.
 Create an instance of simpleTerminal, you must tell it the number of text
 rows and columns.
@@ -55,7 +109,7 @@ cursorDisplay=True: the cursor is visible
 cursorWhileScrolling=False: the cursor is turned off while scrolling.
 
 
-Functions:
+## simpleTerminal Functions:
 - setCursor(column, row)
 	Set the cursor entry point to the specified location.  It is perfectly ok to set the cursor outside of the display, but nothing will show when text is added at that location.
 
