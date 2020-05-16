@@ -8,6 +8,25 @@ If you are want to make a text editor where you want a single status line at the
 
 # editorTerminal class
 
+```python
+editorTerminal(
+        display,
+        displayXPixels, displayYPixels, # display size in pixels
+        rows=None, # number of letters in row, set to None if value is to be calculated based on display YPixels and the font dimensions
+        columns=None, # number of letters in column, set to None if value is to be calculated based on displayXPixels and the font dimensions
+        font=terminalio.FONT,
+        bgColor=0x000000,  # black background
+        textColor=0xFFFFFF,  # white text
+        x=0, # pixel position of the terminal with the parent.
+        y=0, # pixel position of the terminal with the parent.
+        cursorX=0, # initial row position of the cursor
+        cursorY=0, # initial row position of the cursor
+        cursorDisplay=True, # default: the cursor is visible
+        cursorWhileScrolling=False, # default: the cursor is turned off while scrolling.
+    )
+
+```
+
 ## How to use editorTerminal:
 ```python
 from simpleTerminal import editorTerminal
@@ -43,6 +62,23 @@ Editor.terminal=editorTerminal(Editor.display,
 - getScreenSize() - Returns `[rows,columns]` of the editorTerminal, including both the mainTerminal and statusTerminal, in units of number of characters.
 
 # simpleTerminal class
+
+simpleTerminal(
+        rows,
+        columns,
+        font=terminalio.FONT,
+        bgColor=0x000000,  # black background
+        textColor=0xFFFFFF,  # white text foreground
+        x=0, # pixel position of the terminal with the parent.
+        y=0, # pixel position of the terminal with the parent.
+        cursorX=0, # initial row position of the cursor
+        cursorY=0, # initial row position of the cursor
+        cursorDisplay=True, # default: the cursor is visible
+        cursorWhileScrolling=False, # default: the cursor is turned off while scrolling.
+    ):
+```
+
+This class creates a terminal of dimensions (columns, rows) with a two color palette using the specified font. 
 
 ### How to use simpleTerminal:
 ```python
@@ -85,22 +121,7 @@ For example:
                 self.mainTerminal.scrollUp()
             Editor.display.auto_refresh=True
 
-simpleTerminal(
-        rows,
-        columns,
-        font=terminalio.FONT,
-        bgColor=0x000000,  # black background
-        textColor=0xFFFFFF,  # white text foreground
-        x=0, # pixel position of the terminal with the parent.
-        y=0, # pixel position of the terminal with the parent.
-        cursorX=0, # initial row position of the cursor
-        cursorY=0, # initial row position of the cursor
-        cursorDisplay=True, # default: the cursor is visible
-        cursorWhileScrolling=False, # default: the cursor is turned off while scrolling.
-    ):
-```
-
-This class creates a terminal of dimensions (columns, rows) with a two color palette using the specified font.  
+ 
 
 ## simpleTerminal Functions:
 - setCursor(column, row) - Set the cursor entry point to the specified location.  It is perfectly ok to set the cursor outside of the display, but nothing will show when text is added at that location.
