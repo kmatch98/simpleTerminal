@@ -174,7 +174,6 @@ class simpleTerminal:
         # ensure that the cursor is in the terminal boundaries
         if (0 <= self.cursorX < self.columns) and (0 <= self.cursorY < self.rows):
             self.cursortilegrid[0, 0] = self.tilegrid[self.cursorX, self.cursorY]
-            # print("writeCursor!")
 
     def cursorColorReset(self):
         # sets the color back to the original values, useful when cursorColorChange is used and last color is uncertain
@@ -189,9 +188,7 @@ class simpleTerminal:
 
     def cursorOff(self):  # to turn the cursor off, such as during scrolling
         if self.cursorDisplay and self.cursorStatus:
-            #    print("Prepop! {}".format(len(self.displayGroup)))
             self.displayGroup.pop(i=-1)
-            #    print("Popped! {}".format(len(self.displayGroup)))
             self.cursorStatus = False
 
     def cursorOn(self):
@@ -314,7 +311,7 @@ class editorTerminal:
 # Questions: Do we want to turn cursor on when editing the status row?
 # Maybe can just turn on when the cursor is on the statusRow.
     import terminalio, displayio
-    
+
     def __init__(
         self,
         display,
@@ -331,7 +328,6 @@ class editorTerminal:
         cursorDisplay=True,
         cursorWhileScrolling=False,
     ):
-        #print('editorTerminal.init')
         self.display=display
         self.font=font
         fontW, fontH = self.font.get_bounding_box()
@@ -344,7 +340,6 @@ class editorTerminal:
         if columns==None:
             self.displayColumns=floor(displayXPixels/fontW)
         self.statusRow=self.displayRows-1 # This is the row that houses the highlighted status row
-        #print("self.statusRow: {}".format(self.statusRow))
         self.bgColor=bgColor
         self.textColor=textColor
         self.x=x
@@ -401,7 +396,7 @@ class editorTerminal:
         # Handle the following commands (from robert-hh/Micropython-Editor)
 
 ##########ifdef VT100
-##    if termcap_vt100: 
+##    if termcap_vt100:
         TERMCAP = (  ## list of terminal control strings
             "\x1b[{row};{col}H",    ## 0: Set cursor
             "\x1b[0K",              ## 1: Clear EOL
@@ -415,7 +410,7 @@ class editorTerminal:
             "\x1bM",                ## 9: Scroll one line up
             "\n",                   ## 10: Scroll one line down
             '\x1b[1;{stop}r',       ## 11: Set lowest line of scrolling range
-            '\x1b[r',               ## 12: Scroll the full screen 
+            '\x1b[r',               ## 12: Scroll the full screen
             '\x1b[999;999H\x1b[6n', ## 13: Report Screen size command
                                     ## 14: Status line format. Elements may be omitted
             "{chd}{file} Row: {row}/{total} Col: {col}  {msg}",
@@ -424,18 +419,18 @@ class editorTerminal:
 ############
 
         # This may need to parse the input text in sections, in case multiples are sent ***
-        
         if text[:1]=="\x1b":# escape character
+            #print('found escape char')
             if text[-1] == "H": ## 0: Set cursor
                 # get row, col  ****
                 row,col=text[2:-1].split(';',1) # split into max of two pieces
-                terminal.setCursor( int(col), int(row) ) # col, row
+                self.setCursor( int(col)-1, int(row)-1 ) # col, row
             elif text == TERMCAP[1]: ## 1: Clear EOL
                 thisTerminal.clearEOL()
             elif text == TERMCAP[2]: ## Cursor ON
                 thisTerminal.cursorOn()
             elif text == TERMCAP[3]: ## Cursor OFF
-                thisTerminal.cursorOFF()
+                thisTerminal.cursorOff()
             elif text == TERMCAP[4]: ## 4: Hilite 0 - normal text
                 pass # not available at this time
             elif text == TERMCAP[5]: ## 5: Hilite 1 - Entering the status line
@@ -443,33 +438,33 @@ class editorTerminal:
             elif text == TERMCAP[6]: ## 6: Hilite 2 - Highlighting Text
                 pass # not available at this time
             elif text == TERMCAP[7]: ## 7: Mouse reporting on
-                pass # not available at this time            
+                pass # not available at this time
             elif text == TERMCAP[8]: ## 8: Mouse reporting on
                 pass # not available at this time
             elif text == TERMCAP[9]: ## 9: Scroll one line up
                 thisTerminal.scrollUp()
                                     ## 10: newline handled below
-                
+
             elif text[-1]=="r":  ## 11/12 - Set scrolling options
                 pass # not necessary for external display
 
                                     ## 13: Report Screen size command
                                     ## Use editorTerminal.getScreenSize()
-                                    
+
                                     ## 15: backspace one character
                                     ## \b backspace handled by simpleTerminal.write()
-            
+
         elif text == TERMCAP[10]: ## 10: Scroll one line down
             thisTerminal.scrollDown()
         else:
             thisTerminal.write(text)
 
     def write(self, text):
-        #print ('write: {}'.format(text))
         if self.cursorY==self.statusRow: # the text is to be written on the status row
-            self.writeToTerminal(self.statusTerminal, text) 
+            print('\nstatusTerminal\n\nwriting: ',text)
+            self.writeToTerminal(self.statusTerminal, text)
         else:
-            self.writeToTerminal(self.mainTerminal, text) 
+            self.writeToTerminal(self.mainTerminal, text)
 
     def setCursor(self, column, row):
         self.cursorX=column
@@ -488,10 +483,10 @@ class editorTerminal:
         else:
             self.cursorOff()
 
-    def cursorOff(self): # changes cursor for the mainTerminal only
+    def cursorOff(self): # changes cursor for the mainTerminal only  *** double check
         self.mainTerminal.cursorOff()
 
-    def cursorOn(self): # changes cursor for mainTerminal only
+    def cursorOn(self): # changes cursor for mainTerminal only *** doublecheck
         self.mainTerminal.cursorOn()
 
     def scrollUp(self, count=1):
@@ -509,22 +504,22 @@ class editorTerminal:
     def clearEOL(self):
         self.display.auto_refresh=False
         if self.cursorY==self.statusRow: # if the cursor is on the status row
-            self.statusTerminal.clearEOL() 
+            self.statusTerminal.clearEOL()
         else:
             self.mainTerminal.clearEOL()
         self.display.auto_refresh=True
-            
+
     def clearAll(self):
-        if self.cursorY==self.statusRow: # if the cursor is on the status row, 
-            self.statusTerminal.clearAll() 
+        if self.cursorY==self.statusRow: # if the cursor is on the status row,
+            self.statusTerminal.clearAll()
         else:
             self.mainTerminal.clearAll()
 
-    def getScreenSize(self): 
+    def getScreenSize(self):
         totalScreenSize=[self.mainTerminal.rows+self.statusTerminal.rows, self.mainTerminal.columns]
-        #print( 'rows: {} columns: {}'.format(totalScreenSize[0], totalScreenSize[1]) )
+        #print( 'rows: {} columns: {}'.format(totalScreenSize[0], totalScreenSize[1]) ) # for debug
         return totalScreenSize # rows, columns
-        
 
-                
+
+
 
