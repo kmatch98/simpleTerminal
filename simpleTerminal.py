@@ -461,7 +461,7 @@ class editorTerminal:
 
     def write(self, text):
         if self.cursorY==self.statusRow: # the text is to be written on the status row
-            print('\nstatusTerminal\n\nwriting: ',text)
+            #print('\nstatusTerminal\n\nwriting: ',text)
             self.writeToTerminal(self.statusTerminal, text)
         else:
             self.writeToTerminal(self.mainTerminal, text)
