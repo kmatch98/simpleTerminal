@@ -37,11 +37,7 @@ Editor.terminal=editorTerminal(Editor.display,
 
 ## editorTerminal Functions:
 
-- deinit_display() - Clears the display back to the standard terminal view (usually to the REPL)
-
-- writeToTerminal(terminal, text) - This is an internal function where you can write text either to the "mainTerminal" or the "statusTerminal".
-
-- write(text) - This function writes text to either "mainTerminal" or "statusTerminal" depending upon the current cursor positions.
+- write(text) - Use this function to write to the editorTerminal.  Based on the cursor position, this function writes text to either "mainTerminal" or "statusTerminal" depending upon the current cursor positions. This handles several VT100 style terminal commands, see function `writeToTerminal` variable `TERMCAP`.
 
 - setCursor(column, row) - Sets the cursor to the desired column or row.  
 
@@ -59,6 +55,10 @@ Editor.terminal=editorTerminal(Editor.display,
 - clearEOL() - On the current line, it clears all text to the right of the cursor position.
 
 - getScreenSize() - Returns `[rows,columns]` of the editorTerminal, including both the mainTerminal and statusTerminal, in units of number of characters.
+
+- deinit_display() - Clears the display back to the standard terminal view (usually to the REPL)
+
+- writeToTerminal(terminal, text) - Internal Function - This is an internal function where you can write text either to the "mainTerminal" or the "statusTerminal".
 
 # simpleTerminal class
 
